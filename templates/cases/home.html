@@ -1,17 +1,64 @@
 {% extends 'base.html' %}
+{% load static %}
 
 {% block content %}
+  <div class="container">
+    <a class="card" href="/all-cases">
+      <div class="card-content">
+        <span class="card-count">10</span>
+        All Cases
+        <i class="fas fa-info-circle"></i>
+      </div>
+    </a>
+    <a class="card" href="/running-cases">
+      <div class="card-content">
+        <span class="card-count">3</span>
+        Running Cases
+        <i class="fas fa-info-circle"></i>
+      </div>
+    </a>
+    <a class="card" href="/today-cases">
+      <div class="card-content">
+        Todays cases
+        <i class="fas fa-info-circle"></i>
+      </div>
+    </a>
+    <a class="card" href="/tomorrow-cases">
+      <div class="card-content">
+        Tomorrows cases
+        <i class="fas fa-info-circle"></i>
+      </div>
+    </a>
+    <a class="card" href="/decided-cases">
+      <div class="card-content">
+        Decided Cases
+        <i class="fas fa-info-circle"></i>
+      </div>
+    </a>
+    <a class="card" href="/abandoned-cases">
+      <div class="card-content">
+        Abandoned Cases
+        <i class="fas fa-info-circle"></i>
+      </div>
+    </a>
+    <a class="card" href="/not-updated-cases">
+      <div class="card-content">
+        Not Updated Cases
+        <i class="fas fa-info-circle"></i>
+      </div>
+    </a>
+    <a class="card" href="/todays-notes">
+      <div class="card-content">
+        Todays Notes
+        <i class="fas fa-info-circle"></i>
+      </div>
+    </a>
+  </div>
 
-    <div class="container">
-        <div class="card" onclick="handleCardClick(1)">Card 1</div>
-        <div class="card" onclick="handleCardClick(2)">Card 2</div>
-        <div class="card" onclick="handleCardClick(3)">Card 3</div>
-        <div class="card" onclick="handleCardClick(4)">Card 4</div>
-        <div class="card" onclick="handleCardClick(5)">Card 5</div>
-        <div class="card" onclick="handleCardClick(6)">Card 6</div>
-        <div class="card" onclick="handleCardClick(7)">Card 7</div>
-        <div class="card" onclick="handleCardClick(8)">Card 8</div>
+  <a class="bottom-card" href="/diary-statistics">
+    <div class="bottom-card-content">
+      Diary Statistics
+      <i class="fas fa-info-circle"></i>
     </div>
-
-    <div class="bottom-card" onclick="handleCardClick(9)">Bottom Card</div>
+  </a>
 {% endblock %}
