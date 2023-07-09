@@ -1,7 +1,7 @@
 
 from django.shortcuts import render, redirect
-from .forms import CaseForm
-from .models import Case
+from .forms import CaseForm, CaseTypeForm, CourtForm, PoliceStationForm
+from .models import Case, CaseType, Court, PoliceStation
 from datetime import date, timedelta
 
 # Create your views here.
@@ -9,13 +9,71 @@ from datetime import date, timedelta
 def home(request):
     return render(request, 'cases/home.html')
 
+def casetype_setup(request):
+    if request.method == 'POST':
+        form = CaseTypeForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect('case-type')
+    else:
+        form = CaseTypeForm()
+
+    casetypes = CaseType.objects.all()
+
+    return render(request, 'cases/case_type.html',{'form':form, 'casetypes': casetypes})
+
+def casetype_update(request, casetype_id):
+    casetype = CaseType.objects.get(id=casetype_id)
+
+    if request.method == 'POST':
+        form = CaseTypeForm(request.POST, instance=casetype)
+        if form.is_valid():
+            form.save()
+            return redirect('case-type')
+    else:
+        form = CaseTypeForm(instance=casetype)
+
+    casetypes = CaseType.objects.all()
+
+    return render(request, 'cases/case_type.html', {'form': form, 'casetypes': casetypes})
+
+###############################
+
+def court_setup(request):
+    if request.method == 'POST':
+        form = CourtForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect('courts')
+    else:
+        form = CourtForm()
+
+    courts = Court.objects.all()
+
+    return render(request, 'cases/courts.html',{'form':form, 'courts': courts})
+
+def court_update(request, court_id):
+    court = CaseType.objects.get(id=court_id)
+
+    if request.method == 'POST':
+        form = CaseTypeForm(request.POST, instance=court)
+        if form.is_valid():
+            form.save()
+            return redirect('courts')
+    else:
+        form = CaseTypeForm(instance=court)
+
+    courts = CaseType.objects.all()
+
+    return render(request, 'cases/courts.html',{'form':form, 'courts': courts})
+
+
 def createCase(request):
     if request.method == 'POST':
         form = CaseForm(request.POST)
         if form.is_valid():
             form.save()
-            return redirect('home')
-        
+            return redirect('home')  
     else:
         form = CaseForm()
     

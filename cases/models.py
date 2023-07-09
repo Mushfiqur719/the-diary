@@ -1,18 +1,24 @@
 from django.db import models
 
-# Create your models here.
+class CaseType(models.Model):
+    case_type = models.CharField(max_length=50, blank=True, null=True)
 
-from django.db import models
+    def __str__(self):
+        return f"{self.case_type}"
+
+class Court(models.Model):
+    court = models.CharField(max_length=50, blank=True, null=True)
+
+    def __str__(self):
+        return f"{self.court}"
+
+class PoliceStation(models.Model):
+    station = models.CharField(max_length=50, blank=True, null=True)
+
+    def __str__(self):
+        return f"{self.station}"
 
 class Case(models.Model):
-    CASE_TYPES = (
-        ('Option 1', 'Option 1'),
-        ('Option 2', 'Option 2'),
-        ('Option 3', 'Option 3'),
-        ('Option 4', 'Option 4'),
-        ('Option 5', 'Option 5'),
-    )
-
     COURTS = (
         ('Court 1', 'Court 1'),
         ('Court 2', 'Court 2'),
@@ -21,18 +27,18 @@ class Case(models.Model):
         ('Court 5', 'Court 5'),
     )
 
-    case_type = models.CharField(max_length=50, choices=CASE_TYPES)
-    court = models.CharField(max_length=50, choices=COURTS)
+    case_type = models.ForeignKey(CaseType, on_delete=models.SET_NULL, blank=True, null=True)
+    court = models.ForeignKey(Court, on_delete=models.SET_NULL, blank=True, null=True)
     date = models.DateField()
     first_party = models.TextField()
     appointed_by = models.TextField()
     law_and_section = models.TextField()
     case_no = models.PositiveIntegerField()
-    police_station = models.CharField(max_length=50)
-    fixed_for = models.TextField()
-    second_party = models.TextField()
-    mobile_no = models.CharField(max_length=15)
-    comments = models.TextField()
+    police_station = models.ForeignKey(PoliceStation, on_delete=models.SET_NULL, blank=True, null=True)
+    fixed_for = models.TextField(blank=True, null=True)
+    second_party = models.TextField(blank=True, null=True)
+    mobile_no = models.CharField(max_length=15, blank=True, null=True)
+    comments = models.TextField(blank=True, null=True)
 
     def __str__(self):
         return f"Case {self.case_no}"
