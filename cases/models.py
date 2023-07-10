@@ -19,14 +19,6 @@ class PoliceStation(models.Model):
         return f"{self.station}"
 
 class Case(models.Model):
-    COURTS = (
-        ('Court 1', 'Court 1'),
-        ('Court 2', 'Court 2'),
-        ('Court 3', 'Court 3'),
-        ('Court 4', 'Court 4'),
-        ('Court 5', 'Court 5'),
-    )
-
     case_type = models.ForeignKey(CaseType, on_delete=models.SET_NULL, blank=True, null=True)
     court = models.ForeignKey(Court, on_delete=models.SET_NULL, blank=True, null=True)
     date = models.DateField()

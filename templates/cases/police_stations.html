@@ -19,10 +19,10 @@
         </tr>
       </thead>
       <tbody>
-        {% for singlecourt in courts %}
+        {% for single_station in stations %}
           <tr>
-            <td>{{ singlecourt.court }}</td>
-            <td><a href="/courts/{{ singlecourt.id }}">Edit</a></td> <!-- Add an "Edit" button -->
+            <td>{{ single_station.station }}</td>
+            <td><a href="/stations/{{ single_station.id }}">Edit</a></td> <!-- Add an "Edit" button -->
           </tr>
         {% empty %}
           <tr>

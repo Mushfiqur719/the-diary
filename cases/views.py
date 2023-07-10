@@ -53,19 +53,47 @@ def court_setup(request):
     return render(request, 'cases/courts.html',{'form':form, 'courts': courts})
 
 def court_update(request, court_id):
-    court = CaseType.objects.get(id=court_id)
+    court = Court.objects.get(id=court_id)
 
     if request.method == 'POST':
-        form = CaseTypeForm(request.POST, instance=court)
+        form = CourtForm(request.POST, instance=court)
         if form.is_valid():
             form.save()
             return redirect('courts')
     else:
-        form = CaseTypeForm(instance=court)
+        form = CourtForm(instance=court)
 
-    courts = CaseType.objects.all()
+    courts = Court.objects.all()
 
     return render(request, 'cases/courts.html',{'form':form, 'courts': courts})
+
+# Poice Station
+
+def police_station_setup(request):
+    if request.method == 'POST':
+        form = PoliceStationForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect('stations')
+    else:
+        form = PoliceStationForm()
+    stations = PoliceStation.objects.all()
+    return render(request, 'cases/police_stations.html',{'form':form, 'stations': stations})
+
+def police_station_update(request, station_id):
+    station = PoliceStation.objects.get(id=station_id)
+
+    if request.method == 'POST':
+        form = PoliceStationForm(request.POST, instance=station)
+        if form.is_valid():
+            form.save()
+            return redirect('stations')
+    else:
+        form = PoliceStationForm(instance=station)
+
+    stations = PoliceStation.objects.all()
+    return render(request, 'cases/police_stations.html',{'form':form, 'stations': stations})
+
 
 
 def createCase(request):
