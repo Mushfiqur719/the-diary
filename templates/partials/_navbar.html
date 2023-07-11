@@ -1,6 +1,11 @@
 <div class="navbar">
     <span class="menu-icon" onclick="toggleNav()">&#9776;</span>
     <div class="logo">My Website</div>
-    <button class="logout-button" onclick="handleLogout()">Logout</button>
+    {% if user.is_authenticated %}
+    <a class="btn btn-primary" href="{% url 'logout' %}">Logout</a>
+    {% else %}
+    <a class="btn btn-primary" href="{% url 'login' %}">Login</a>
+    {%endif%}
+
   </div>
   
