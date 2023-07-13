@@ -1,0 +1,44 @@
+<div class="sidebar sidebar-hide-to-small sidebar-shrink sidebar-gestures">
+  <div class="nano">
+      <div class="nano-content">
+          <ul>
+              <div class="logo"><a href="{% url 'dashboard' %}">
+                      <!-- <img src="images/logo.png" alt="" /> --><span>Diary</span></a></div>
+              <li class="label">Main</li>
+              <li><a href="{% url 'dashboard' %}"><i class="ti-home"></i> Dashboard</a></li>
+              <li><a class="sidebar-sub-toggle"><i class="ti-file"></i>Cases  <span
+                          class="sidebar-collapse-icon ti-angle-down"></span></a>
+                  <ul>
+                      <li><a href="{% url 'create-case' %}"><i class="ti-plus"></i>New Case</a></li>
+                      <li><a href="{% url 'cases' %}"><i class="ti-list"></i>All Cases</a></li>
+                  </ul>
+              </li>
+
+              <li><a class="sidebar-sub-toggle"><i class="ti-user"></i> Client <span
+                          class="sidebar-collapse-icon ti-angle-down"></span></a>
+                  <ul>
+                      <li><a href="#"><i class="ti-plus"></i>New Client</a></li>
+                      <li><a href="#"><i class="ti-list"></i>All Client</a></li>
+                     
+                  </ul>
+              </li>
+
+              <li>
+                <a class="sidebar-sub-toggle"><i class="ti-user"></i> Accounts <span
+                class="sidebar-collapse-icon ti-angle-down"></span></a>
+                <ul>
+                    <li><a href="#"><i class="ti-plus"></i>Statements</a></li>
+                    <li><a href="#"><i class="ti-text"></i>Due Bills</a></li>
+                    <li><a href="#"><i class="ti-text"></i>Bills and Invoices</a></li>
+                    <li><a href="#"><i class="ti-list"></i>Quotations</a></li>
+           
+                </ul>
+            </li>
+              <li><a href="#"><i class="ti-view-list"></i> Draftings</a></li>
+              <li><a href="#"><i class="ti-bar-chart"></i> Lawyer Calculator</a></li>
+              <li><a href="#"><i class="ti-link"></i> Important Links</a></li>
+            
+          </ul>
+      </div>
+  </div>
+</div>

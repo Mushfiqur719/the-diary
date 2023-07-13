@@ -3,7 +3,7 @@ from django.urls import path
 from . import views
 
 urlpatterns = [
-    path('', views.home , name='home'),
+    path('cases/', views.cases , name='cases'),
     path('case-type/',views.casetype_setup, name='case-type'),
     path('case-type/<int:casetype_id>/',views.casetype_update, name='edit-case-type'),
 

@@ -6,8 +6,8 @@ from datetime import date, timedelta
 
 # Create your views here.
 
-def home(request):
-    return render(request, 'cases/home.html')
+def cases(request):
+    return render(request, 'cases/cases.html')
 
 def casetype_setup(request):
     if request.method == 'POST':

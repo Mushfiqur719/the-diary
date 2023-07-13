@@ -2,9 +2,10 @@
 {% load crispy_forms_tags %}
 
 {% block content %}
-
-        
-        <h3 class="text-center">Login</h3>
+<div class="container login">
+    <div class="row">
+        <div class="col-md-12">
+            <h3 class="text-center">Login</h3>
 
             <form method="POST">
                 {% csrf_token %}
@@ -32,6 +33,10 @@
                 <p style="color:red">{{error}}</p>
                 {% endfor %}
             </form>
+        </div>
+    </div>
+</div>
 
+       
 
 {% endblock content %}

@@ -6,20 +6,23 @@ from .forms import CustomUserForm, UserLoginForm
 
 # Create your views here.
 
+def index(request):
+    return render(request, 'base.html')
+
 @login_required(login_url='login/')
-def home(request):
-    return render(request,'home.html')
+def dashboard(request):
+    return render(request,'dashboard/index.html')
 
 def registration(request):
     if request.user.is_authenticated:
-        return redirect('home')
+        return redirect('dashboard')
     context={}
     
     if request.method=="POST":
         form=CustomUserForm(request.POST)
         if form.is_valid():
             user= form.save()
-            return redirect('home')
+            return redirect('dashboard')
         context['register_form']=form
     else:
         form= CustomUserForm()
@@ -29,7 +32,7 @@ def registration(request):
 
 def login_view(request):
     if request.user.is_authenticated:
-        return redirect('home') 
+        return redirect('dashboard') 
 
     context={}
     if request.method=="POST":
@@ -41,7 +44,8 @@ def login_view(request):
             
             if user is not None:
                 login(request,user)
-                return redirect('home')
+                return redirect('dashboard')
+            
     else:
         form=UserLoginForm()
         context['login_form']=form
@@ -49,4 +53,4 @@ def login_view(request):
 
 def logout_user(request):
     logout(request)
-    return redirect('login')
+    return redirect('login_user')
