@@ -1,0 +1,39 @@
+
+{% extends 'dashboard/dashboard.html' %}
+{% load crispy_forms_tags %}
+
+{% block content %}
+  <h1>Case Type</h1>
+  <form method="post">
+    {% csrf_token %}
+
+    {{ form|crispy }}
+    
+    <button type="submit" class="btn btn-primary">Create</button>
+  </form>
+
+  <h1>Case Type List</h1>
+  <div class="table-container">
+    <table>
+      <thead>
+        <tr>
+          <th>Case Type</th>
+          <th>Edit</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for case in casetypes %}
+          <tr>
+            <td>{{ case.case_type }}</td>
+            <td><a href="/case-type/{{ case.id }}">Edit</a></td> <!-- Add an "Edit" button -->
+          </tr>
+        {% empty %}
+          <tr>
+            <td colspan="12">No cases found.</td>
+          </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+
+{% endblock %}
