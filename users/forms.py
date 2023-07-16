@@ -12,10 +12,11 @@ class CustomUserForm(UserCreationForm):
         
 
 class UserLoginForm(forms.ModelForm):
+    email = forms.EmailField()
     password = forms.CharField(label="Password",widget=forms.PasswordInput)
     class Meta:
         model=CustomUser
-        fields=('email', 'password')
+        fields=['email', 'password']
         
     def clean(self):
         if self.is_valid():
@@ -24,3 +25,4 @@ class UserLoginForm(forms.ModelForm):
             
             if not authenticate(email=email,password=password):
                 raise forms.ValidationError("Invalid Credentials")
+            

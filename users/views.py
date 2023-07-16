@@ -5,11 +5,11 @@ from django.contrib.auth.decorators import login_required
 from .forms import CustomUserForm, UserLoginForm
 
 # Create your views here.
-
 def index(request):
-    return render(request, 'base.html')
+    return render(request,'index.html')
 
-@login_required(login_url='login/')
+
+@login_required()
 def dashboard(request):
     return render(request,'dashboard/index.html')
 
