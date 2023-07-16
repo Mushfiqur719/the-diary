@@ -46,5 +46,14 @@ class Case(models.Model):
     mobile_no = models.CharField(max_length=15, blank=True, null=True)
     comments = models.TextField(blank=True, null=True)
 
+    STATUS_CHOICES = (
+        ('Running', 'Running'),
+        ('Decided', 'Decided'),
+        ('Abandoned', 'Abandoned'),
+    )
+    status = models.CharField(max_length=20, choices=STATUS_CHOICES, default='Running')
+    updated = models.BooleanField(default=False)
+
     def __str__(self):
         return f"Case {self.case_no}"
+

@@ -6,6 +6,7 @@ from datetime import date, timedelta
 
 # Create your views here.
 
+
 def cases(request):
     return render(request, 'cases/cases.html')
 
