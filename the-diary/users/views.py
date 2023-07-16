@@ -32,9 +32,13 @@ def registration(request):
 
 def login_view(request):
     if request.user.is_authenticated:
-        return redirect('dashboard') 
-
-    context={}
+        return redirect('dashboard')
+     
+    form=UserLoginForm()
+    context={
+        'form':form
+    }
+    
     if request.method=="POST":
         form= UserLoginForm(request.POST)
         if form.is_valid():
@@ -45,10 +49,10 @@ def login_view(request):
             if user is not None:
                 login(request,user)
                 return redirect('dashboard')
+            else:
+                form= UserLoginForm()
+                return render(request,'registration/login.html',context)
             
-    else:
-        form=UserLoginForm()
-        context['login_form']=form
     return render(request,'registration/login.html',context)
 
 def logout_user(request):
