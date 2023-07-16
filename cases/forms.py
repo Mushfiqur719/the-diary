@@ -1,6 +1,6 @@
 # forms.py
 from django import forms
-from .models import Case, CaseType , Court, PoliceStation
+from .models import Case, CaseType , Court, PoliceStation, Client
 
 
 class CaseTypeForm(forms.ModelForm):
@@ -25,3 +25,8 @@ class CaseForm(forms.ModelForm):
         widgets = {
             'date': forms.DateInput(attrs={'class': 'datepicker'}),
         }
+
+class ClientForm(forms.ModelForm):
+    class Meta:
+        model = Client
+        fields = '__all__'

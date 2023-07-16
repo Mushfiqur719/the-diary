@@ -1,7 +1,7 @@
 
 from django.shortcuts import render, redirect
-from .forms import CaseForm, CaseTypeForm, CourtForm, PoliceStationForm
-from .models import Case, CaseType, Court, PoliceStation
+from .forms import CaseForm, CaseTypeForm, CourtForm, PoliceStationForm, ClientForm
+from .models import Case, CaseType, Court, PoliceStation, Client
 from datetime import date, timedelta
 
 # Create your views here.
@@ -107,12 +107,11 @@ def createCase(request):
     
     return render(request,'cases/create_case.html',{'form':form})
 
-# All Cases
+
 def getAllCases(request):
     cases = Case.objects.all()
     return render(request, 'cases/all_cases.html', {'cases': cases})
 
-# Todays Cases
 def todays_case_list(request):
     today = date.today()
     cases = Case.objects.filter(date=today)
@@ -124,11 +123,36 @@ def tomorrows_case_list(request):
     cases = Case.objects.filter(date=tomorrow)
     return render(request, 'cases/tomorrows_cases.html', {'cases': cases})
 
+def addClient(request):
+    if request.method == 'POST':
+        form = ClientForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect('home')
+    else:
+        form = ClientForm()
+    
+    return render(request, 'cases/add_client.html', {'form':form})
+
+def client_update(request, client_id):
+    client = Client.objects.get(id=client_id)
+    if request.method == 'POST':
+        form = ClientForm(request.POST, instance=client)
+        if form.is_valid():
+            form.save()
+            return redirect('home')
+    else:
+        form = ClientForm(instance=client)
+    
+    return render(request, 'cases/add_client.html', {'form':form})
+
+def getAllClients(request):
+    clients = Client.objects.all()
+    return render(request, 'cases/all_client.html', {'clients': clients})
 
 
+# Todays Cases
 # Running Cases
-
-
 # Decided Cases
 # Abandoned Cases
 # Not updated Cases

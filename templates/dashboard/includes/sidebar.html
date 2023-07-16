@@ -16,7 +16,6 @@
               <nav class="sb-sidenav-menu-nested nav">
                   <a class="nav-link" href="{% url 'create-case' %}">New Case</a>
                   <a class="nav-link" href="{% url 'all-cases' %}"> All Cases</a>
-                  <a class="nav-link" href="{% url 'case-type' %}">Case Type</a>
               </nav>
           </div>
 
@@ -41,8 +40,8 @@
         </a>
         <div class="collapse" id="clients" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordion">
             <nav class="sb-sidenav-menu-nested nav">
-                <a class="nav-link" href="#">New Clients</a>
-                <a class="nav-link" href="#">All Clients</a>
+                <a class="nav-link" href="{% url 'add-client' %}">New Clients</a>
+                <a class="nav-link" href="{% url 'all-client' %}">All Clients</a>
             </nav>
         </div>
 

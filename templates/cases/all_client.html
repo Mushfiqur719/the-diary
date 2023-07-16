@@ -1,0 +1,49 @@
+{% extends 'dashboard/dashboard.html' %}
+
+{% block content %}
+<div class="container">
+    <div class="row">
+        <div class="col-md-12">
+            <h3 class="text-center">Case List</h3>
+            {% if clients %}
+                    <table>
+                        <thead>
+                        <tr>
+                            <th>Name</th>
+                            <th>Branch</th>
+                            <th>Chamber File Number</th>
+                            <th>Representative</th>
+                            <th>Mobile</th>
+                            <th>Additional Mobile</th>
+                            <th>email</th>
+                            <th>Address</th>
+                            <th>Short Note</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {% for case in cases %}
+                            <tr>
+                            <td>{{ client.name }}</td>
+                            <td>{{ client.branch }}</td>
+                            <td>{{ client.chamber_file_number }}</td>
+                            <td>{{ client.representative }}</td>
+                            <td>{{ client.mobile }}</td>
+                            <td>{{ client.additional_mobile }}</td>
+                            <td>{{ client.email }}</td>
+                            <td>{{ client.short_note }}</td>
+                            
+                            </tr>
+                        {% empty %}
+                            <tr>
+                            <td colspan="12">No Clients found.</td>
+                            </tr>
+                        {% endfor %}
+                        </tbody>
+                    </table>
+                    {% else %}
+                    <h3 class="text-center alert alert-primary" role="alert">Currently, No Clients in the list</h3>
+                    {% endif %}
+        </div>
+    </div>
+  </div>
+{% endblock %}
