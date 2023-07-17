@@ -4,12 +4,12 @@ from .forms import CaseForm, CaseTypeForm, CourtForm, PoliceStationForm, ClientF
 from .models import Case, CaseType, Court, PoliceStation, Client
 from datetime import date, timedelta
 
-# Create your views here.
+
 
 
 def cases(request):
     return render(request, 'cases/cases.html')
-
+# Case Types
 def casetype_setup(request):
     if request.method == 'POST':
         form = CaseTypeForm(request.POST)
@@ -35,7 +35,6 @@ def casetype_update(request, casetype_id):
         form = CaseTypeForm(instance=casetype)
 
     casetypes = CaseType.objects.all()
-
     return render(request, 'cases/case_type.html', {'form': form, 'casetypes': casetypes})
 
 ###############################
@@ -102,7 +101,7 @@ def createCase(request):
         form = CaseForm(request.POST)
         if form.is_valid():
             form.save()
-            return redirect('home')  
+            return redirect('dashboard')  
     else:
         form = CaseForm()
     
@@ -112,17 +111,6 @@ def createCase(request):
 def getAllCases(request):
     cases = Case.objects.all()
     return render(request, 'cases/all_cases.html', {'cases': cases})
-
-def todays_case_list(request):
-    today = date.today()
-    cases = Case.objects.filter(date=today)
-    return render(request, 'cases/todays_cases.html', {'cases': cases})
-
-# Tomorrows Cases
-def tomorrows_case_list(request):
-    tomorrow = date.today() + timedelta(days=1)
-    cases = Case.objects.filter(date=tomorrow)
-    return render(request, 'cases/tomorrows_cases.html', {'cases': cases})
 
 def addClient(request):
     if request.method == 'POST':
@@ -151,11 +139,36 @@ def getAllClients(request):
     clients = Client.objects.all()
     return render(request, 'cases/all_client.html', {'clients': clients})
 
-
 # Todays Cases
+def todays_case_list(request):
+    today = date.today()
+    todays_cases = Case.objects.filter(date=today)
+    return render(request, 'cases/todays_cases.html', {'todays_cases': todays_cases})
+
+# Tomorrows Cases
+def tomorrows_case_list(request):
+    tomorrow = date.today() + timedelta(days=1)
+    tomorrows_cases = Case.objects.filter(date=tomorrow)
+    return render(request, 'cases/tomorrows_cases.html', {'tomorrows_cases': tomorrows_cases})
+
 # Running Cases
-# Decided Cases
+def running_case_list(request):
+    running_cases = Case.objects.filter(status='Running')
+    return render(request, 'cases/running_cases.html', {'running_cases': running_cases})
+
 # Abandoned Cases
-# Not updated Cases
-# Todays    
+def abandoned_case_list(request):
+    abandoned_cases = Case.objects.filter(status='Abandoned')
+    return render(request, 'cases/abandoned_cases.html', {'abandoned_cases': abandoned_cases})
+
+# Decided Cases
+def decided_case_list(request):
+    decided_cases = Case.objects.filter(status='Decided')
+    return render(request, 'cases/decided_cases.html', {'decided_cases': decided_cases})
+
+# Not Updated Cases
+def not_updated_case_list(request):
+    not_updated_cases = Case.objects.filter(updated=False)
+    return render(request, 'cases/not_updated_cases.html', {'not_updated_cases': not_updated_cases})
+
 
