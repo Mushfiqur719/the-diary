@@ -23,5 +23,5 @@ class CaseForm(forms.ModelForm):
         model = Case
         fields = '__all__'
         widgets = {
-            'date': forms.DateInput(attrs={'class': 'datepicker'}),
+            'date': forms.DateInput(attrs={'type': 'date'}),
         }

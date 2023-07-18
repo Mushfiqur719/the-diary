@@ -3,22 +3,31 @@
 {% load crispy_forms_tags %}
 
 {% block content %}
-  <h1>Case Type</h1>
+<div class="container">
+  <div class="row">
+    <div class="col-md-8 offset-md-2">
+      <h2>Case Type</h2>
   <form method="post">
     {% csrf_token %}
 
-    {{ form|crispy }}
+    <div class="row">
+      <div class="col-md-8">{{form.case_type|as_crispy_field}}</div>
+    </div>
+    <div class="row">
+      <div class="col-md-2 offset-md-3"><button type="submit" class="btn btn-primary">Create</button></div>
+    </div>
     
-    <button type="submit" class="btn btn-primary">Create</button>
   </form>
 
-  <h1>Case Type List</h1>
+  <br>
+  <br>
+  <h2>Case Type List</h2>
   <div class="table-container">
-    <table>
-      <thead>
+    <table class="table">
+      <thead class="thead-dark">
         <tr>
-          <th>Case Type</th>
-          <th>Edit</th>
+          <th scope="col">Case Type</th>
+          <th scope="col">Edit</th>
         </tr>
       </thead>
       <tbody>
@@ -35,5 +44,9 @@
       </tbody>
     </table>
   </div>
+    </div>
+  </div>
+</div>
+  
 
 {% endblock %}
