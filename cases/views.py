@@ -4,9 +4,6 @@ from .forms import CaseForm, CaseTypeForm, CourtForm, PoliceStationForm, ClientF
 from .models import Case, CaseType, Court, PoliceStation, Client
 from datetime import date, timedelta
 
-
-
-
 def cases(request):
     return render(request, 'cases/cases.html')
 # Case Types

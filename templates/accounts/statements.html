@@ -1,0 +1,42 @@
+{% extends 'dashboard/dashboard.html' %}
+
+{% block content %}
+<div class="container">
+    <div class="row">
+        <div class="col-md-12">
+            <h3 class="text-center">Case List</h3>
+            {% if cases %}
+                    <table>
+                        <thead>
+                        <tr>
+                            <th>Date</th>
+                            <th>Client Name</th>
+                            <th>Details</th>
+                            <th>Transaction Type</th>
+
+                            <th>Action</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {% for statement in statements %}
+                            <tr>
+                            <td>{{ statement.date }}</td>
+                            <td>{{ statement.party_name }}</td>
+                            <td>{{ statement.details }}</td>
+                            <td>{{ statement.transaction_type }}</td>
+
+                            </tr>
+                        {% empty %}
+                            <tr>
+                            <td colspan="12">No cases found.</td>
+                            </tr>
+                        {% endfor %}
+                        </tbody>
+                    </table>
+                    {% else %}
+                    <h3 class="text-center alert alert-primary" role="alert">Currently, You don't have any cases</h3>
+                    {% endif %}
+        </div>
+    </div>
+  </div>
+{% endblock %}
