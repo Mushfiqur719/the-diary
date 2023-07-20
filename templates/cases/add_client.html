@@ -10,9 +10,31 @@
             
             {% csrf_token %}
 
-            {{ form|crispy }}
-            
-            <button type="submit" class="btn btn-primary">Add</button>
+           <div class="row">
+            <div class="col-md-6">{{ form.name|as_crispy_field }}</div>
+            <div class="col-md-6">{{ form.branch|as_crispy_field }}</div>
+           </div>
+           <div class="row">
+            <div class="col-md-6">{{ form.chamber_file_number|as_crispy_field }}</div>
+            <div class="col-md-6">{{ form.Representativ|as_crispy_field }}</div>
+           </div>
+           <div class="row">
+            <div class="col-md-6">{{ form.mobile|as_crispy_field }}</div>
+            <div class="col-md-6">{{ form.additional_mobile|as_crispy_field }}</div>
+           </div>
+           <div class="row">
+            <div class="col-md-6">{{ form.email|as_crispy_field }}</div>
+            <div class="col-md-6"></div>
+           </div>
+           <div class="row">
+            <div class="col-md-6">{{ form.address|as_crispy_field }}</div>
+            <div class="col-md-6">{{ form.short_note|as_crispy_field }}</div>
+           </div>
+           <br>
+            <div class="row">
+              <div class="col-md-2 offset-md-5"> <button type="submit" class="btn btn-primary">Add Client</button></div>
+            </div>
+           
           </form>
       </div>
     </div>
