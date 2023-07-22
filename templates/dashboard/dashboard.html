@@ -24,13 +24,15 @@
 
             </div>
             <div id="layoutSidenav_content">
-
                 {% block content %}
 
 
 
                 
                 {% endblock content %}
+
+                {% comment %} {% include 'dashboard/includes/table.html' %} {% endcomment %}
+               
 
                 {% include 'dashboard/includes/footer.html' %}
             </div>
