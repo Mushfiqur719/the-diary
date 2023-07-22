@@ -3,6 +3,8 @@ from django.shortcuts import render, redirect
 from .forms import CaseForm, CaseTypeForm, CourtForm, PoliceStationForm, ClientForm
 from .models import Case, CaseType, Court, PoliceStation, Client
 from datetime import date, timedelta
+# from reportlab.lib.pagesizes import letter
+# from reportlab.pdfgen import canvas
 
 def cases(request):
     return render(request, 'cases/cases.html')
@@ -170,5 +172,43 @@ def not_updated_case_list(request):
     current_user = request.user
     not_updated_cases = Case.objects.filter(updated=False, user=current_user)
     return render(request, 'cases/not_updated_cases.html', {'not_updated_cases': not_updated_cases})
+
+# def generate_pdf(request):
+#     from io import BytesIO
+
+#     # Get the data from the Case model (you may need to modify this query based on your use case)
+#     cases = Case.objects.all()
+
+#     # Create a BytesIO buffer to hold the PDF
+#     buffer = BytesIO()
+
+#     # Create the PDF canvas with the buffer and set the page size to letter
+#     p = canvas.Canvas(buffer, pagesize=letter)
+
+#     # Add content to the PDF
+#     p.setFont("Helvetica", 12)
+#     p.drawString(100, 800, "Case List")
+
+#     # Iterate through the cases and add the data to the PDF
+#     y = 780  # Initial y position for the content
+#     for case in cases:
+#         p.drawString(100, y, f"Case No: {case.case_no}")
+#         p.drawString(100, y - 20, f"Status: {case.status}")
+#         # Add more data here if needed
+#         y -= 40  # Decrement y position for the next case
+
+#     # Save the PDF
+#     p.save()
+
+#     # Get the value of the buffer and create the HTTP response with PDF content
+#     pdf_data = buffer.getvalue()
+#     buffer.close()
+
+#     response = HttpResponse(content_type='application/pdf')
+#     response['Content-Disposition'] = 'attachment; filename="case_list.pdf"'
+#     response.write(pdf_data)
+
+#     return response
+
 
 
