@@ -135,34 +135,40 @@ def getAllClients(request):
 
 # Todays Cases
 def todays_case_list(request):
+    current_user = request.user
     today = date.today()
-    todays_cases = Case.objects.filter(date=today)
+    todays_cases = Case.objects.filter(date=today, user=current_user)
     return render(request, 'cases/todays_cases.html', {'todays_cases': todays_cases})
 
 # Tomorrows Cases
 def tomorrows_case_list(request):
+    current_user = request.user
     tomorrow = date.today() + timedelta(days=1)
-    tomorrows_cases = Case.objects.filter(date=tomorrow)
+    tomorrows_cases = Case.objects.filter(date=tomorrow, user=current_user)
     return render(request, 'cases/tomorrows_cases.html', {'tomorrows_cases': tomorrows_cases})
 
 # Running Cases
 def running_case_list(request):
-    running_cases = Case.objects.filter(status='Running')
+    current_user = request.user
+    running_cases = Case.objects.filter(status='Running', user=current_user)
     return render(request, 'cases/running_cases.html', {'running_cases': running_cases})
 
 # Abandoned Cases
 def abandoned_case_list(request):
-    abandoned_cases = Case.objects.filter(status='Abandoned')
+    current_user = request.user
+    abandoned_cases = Case.objects.filter(status='Abandoned', user=current_user)
     return render(request, 'cases/abandoned_cases.html', {'abandoned_cases': abandoned_cases})
 
 # Decided Cases
 def decided_case_list(request):
-    decided_cases = Case.objects.filter(status='Decided')
+    current_user = request.user
+    decided_cases = Case.objects.filter(status='Decided', user=current_user)
     return render(request, 'cases/decided_cases.html', {'decided_cases': decided_cases})
 
 # Not Updated Cases
 def not_updated_case_list(request):
-    not_updated_cases = Case.objects.filter(updated=False)
+    current_user = request.user
+    not_updated_cases = Case.objects.filter(updated=False, user=current_user)
     return render(request, 'cases/not_updated_cases.html', {'not_updated_cases': not_updated_cases})
 
 

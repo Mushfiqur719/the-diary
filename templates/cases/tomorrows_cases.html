@@ -4,8 +4,8 @@
 <div class="container">
     <div class="row">
         <div class="col-md-12">
-            <h3 class="text-center">Case List</h3>
-                {% if cases %}
+            <h3 class="text-center">Tomorrows Case List</h3>
+                {% if tomorrows_cases %}
                     <table class="table">
                         <thead class="thead-dark">
                             <tr>
@@ -24,7 +24,7 @@
                             </tr>
                         </thead>
                         <tbody>
-                            {% for case in cases %}
+                            {% for case in tomorrows_cases %}
                             <tr>
                             <th scope="row">{{ case.case_type }}</th>
                             <td>{{ case.court }}</td>
