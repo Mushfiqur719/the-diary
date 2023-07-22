@@ -95,12 +95,10 @@ def createCase(request):
     if request.method == 'POST':
         form = CaseForm(request.POST)
         if form.is_valid():
-            # Assign the currently logged-in user to the 'user' field
-            form.instance.user = request.user
             form.save()
-            return redirect('dashboard')  
+            return redirect('dashboard')
     else:
-        form = CaseForm() 
+        form = CaseForm()
     return render(request, 'cases/create_case.html', {'form': form})
 
 def getAllCases(request):
