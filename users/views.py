@@ -10,27 +10,30 @@ from datetime import date, timedelta
 def index(request):
     return render(request,'index.html')
 
-
-@login_required()
+@login_required
 def dashboard(request):
-    all_cases = Case.objects.count()
-    running_cases = Case.objects.filter(status='Running').count()
-    todays_cases = Case.objects.filter(date=date.today()).count()
-    tomorrows_cases = Case.objects.filter(date=date.today() + timedelta(days=1)).count()
-    not_updated_cases = Case.objects.filter(updated=False).count()
-    decided_cases = Case.objects.filter(status='Decided').count()
-    abandoned_cases = Case.objects.filter(status='Abandoned').count()
+    user = request.user  # Get the currently logged-in user
+
+    # Filter cases by the logged-in user
+    all_cases = Case.objects.filter(user=user).count()
+    running_cases = Case.objects.filter(user=user, status='Running').count()
+    todays_cases = Case.objects.filter(user=user, date=date.today()).count()
+    tomorrows_cases = Case.objects.filter(user=user, date=date.today() + timedelta(days=1)).count()
+    not_updated_cases = Case.objects.filter(user=user, updated=False).count()
+    decided_cases = Case.objects.filter(user=user, status='Decided').count()
+    abandoned_cases = Case.objects.filter(user=user, status='Abandoned').count()
 
     context = {
         'all_cases': all_cases,
-        'running_cases':running_cases,
-        'todays_cases' : todays_cases,
-        'tomorrows_cases' : tomorrows_cases,
-        'not_updated_cases':not_updated_cases,
-        'decided_cases':decided_cases,
-        'abandoned_cases':abandoned_cases,
+        'running_cases': running_cases,
+        'todays_cases': todays_cases,
+        'tomorrows_cases': tomorrows_cases,
+        'not_updated_cases': not_updated_cases,
+        'decided_cases': decided_cases,
+        'abandoned_cases': abandoned_cases,
     }
-    return render(request,'dashboard/index.html',context)
+    return render(request, 'dashboard/index.html', context)
+
 
 def registration(request):
     if request.user.is_authenticated:
@@ -41,7 +44,7 @@ def registration(request):
         form=CustomUserForm(request.POST)
         if form.is_valid():
             user= form.save()
-            return redirect('dashboard')
+            return redirect('login_user')
         context['register_form']=form
     else:
         form= CustomUserForm()

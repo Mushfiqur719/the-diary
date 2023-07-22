@@ -36,7 +36,6 @@ class CustomUser(AbstractBaseUser):
     email= models.EmailField(max_length=100,unique=True)
     phone= models.CharField(max_length=15,unique=True)
     
-    
     #required fields
     date_joined = models.DateTimeField(auto_now_add=True)
     last_login = models.DateTimeField(auto_now_add=True)
