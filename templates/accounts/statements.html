@@ -4,8 +4,8 @@
 <div class="container">
     <div class="row">
         <div class="col-md-12">
-            <h3 class="text-center">Case List</h3>
-            {% if cases %}
+            <h3 class="text-center">Statements</h3>
+            {% if statements %}
                     <table>
                         <thead>
                         <tr>
@@ -13,7 +13,6 @@
                             <th>Client Name</th>
                             <th>Details</th>
                             <th>Transaction Type</th>
-
                             <th>Action</th>
                         </tr>
                         </thead>
@@ -24,7 +23,6 @@
                             <td>{{ statement.party_name }}</td>
                             <td>{{ statement.details }}</td>
                             <td>{{ statement.transaction_type }}</td>
-
                             </tr>
                         {% empty %}
                             <tr>
@@ -34,7 +32,7 @@
                         </tbody>
                     </table>
                     {% else %}
-                    <h3 class="text-center alert alert-primary" role="alert">Currently, You don't have any cases</h3>
+                    <h3 class="text-center alert alert-primary" role="alert">Currently, You don't have any statements</h3>
                     {% endif %}
         </div>
     </div>
