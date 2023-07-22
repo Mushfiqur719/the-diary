@@ -2,8 +2,9 @@ from django.shortcuts import render, redirect
 from django.contrib.auth import login,logout, authenticate
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
-from .forms import CustomUserForm, UserLoginForm
+from .forms import CustomUserForm, UserLoginForm, ProfileUpdateForm
 from cases.models import Case
+from users.models import CustomUser
 from datetime import date, timedelta 
 
 # Create your views here.
@@ -72,6 +73,22 @@ def login_view(request):
         form=UserLoginForm()
         context['login_form']=form
     return render(request,'registration/login.html',context)
+
+def profile_page(request):
+    user = request.user.id
+    profile= CustomUser.objects.get(id=user)
+    return render(request,'dashboard/profile_page.html',{'profile':profile})
+
+
+def profile_update(request,pk):
+    user= CustomUser.objects.get(pk=pk)
+    form=ProfileUpdateForm(instance=user)
+    if request.method == 'POST':
+        profile_update=ProfileUpdateForm(request.POST,instance=request.user)
+        if profile_update.is_valid():
+            profile_update.save()
+            return redirect('profile_page')
+    return render(request,'dashboard/profile_update.html',{'form':form})
 
 def logout_user(request):
     logout(request)

@@ -1,0 +1,47 @@
+{% extends 'dashboard/dashboard.html' %}
+{% block title %}Profile{% endblock title %}
+{% load crispy_forms_tags %}
+
+{% block content %}
+
+<div class="container login">
+    <div class="row">
+        <div class="col-md-6 offset-md-3">
+            <h3 class="text-center">Profile Update</h3>
+                
+            <form method="POST">
+                {% csrf_token %}
+                {% comment %} <div class="row">
+                    <div class="col-md-4">{{register_form.name|as_crispy_field}} </div>
+                    <div class="col-md-4">{{register_form.email|as_crispy_field}}</div>
+                    <div class="col-md-4">{{register_form.phone|as_crispy_field}}</div>
+                </div>
+                <div class="row">
+                    <div class="col-md-6">{{register_form.password1|as_crispy_field}}</div>
+                    <div class="col-md-6">{{register_form.password2|as_crispy_field}}</div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-4"></div>
+                    <div class="col-md-4"><button type="submit" class="btn btn-success btn-block btn-lg">Sign Up</button> </div>
+                    
+                </div> {% endcomment %}
+
+                {{form|crispy}}
+                <br>
+                <div class="row">
+                    <div class="col-md-4"></div>
+                    <div class="col-md-4"><button type="submit" class="btn btn-success btn-block btn-lg">Update Profile</button> </div>
+                    
+                </div>
+
+                
+            </form>
+
+        </div>
+    </div>
+</div>
+
+ 
+
+{% endblock content %}

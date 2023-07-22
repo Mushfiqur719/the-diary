@@ -1,0 +1,40 @@
+{% extends 'dashboard/dashboard.html' %}
+{% block title %}Profile{% endblock title %}
+{% load crispy_forms_tags %}
+
+{% block content %}
+
+<div class="container login">
+    <div class="row">
+        <div class="col-md-6 offset-md-3">
+            <h3 class="text-center">Profile</h3>
+                
+            <table class="table">
+                <thead class="thead-dark">
+                  <tr>
+                    
+                    <th scope="col">Name</th>
+                    <th scope="col">Email</th>
+                    <th scope="col">Phone</th>
+                    <th scope="col"></th>
+                  </tr>
+                </thead>
+                <tbody>
+               
+                  <tr>
+                   
+                    <td>{{profile.name}}</td>
+                    <td>{{profile.email}}</td>
+                    <td>{{profile.phone}}</td>
+                    <td><a href="{% url 'profile_update' user.id %}" class="btn btn-outline-primary">Update</a></td>
+
+                  </tr>
+                 
+                </tbody>
+              </table>
+        </div>
+    </div>
+</div>
+
+
+{% endblock content %}
