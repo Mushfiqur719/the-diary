@@ -97,6 +97,7 @@ def createCase(request):
     if request.method == 'POST':
         form = CaseForm(request.POST)
         if form.is_valid():
+            form.instance.user = request.user
             form.save()
             return redirect('dashboard')
     else:
@@ -112,6 +113,7 @@ def addClient(request):
     if request.method == 'POST':
         form = ClientForm(request.POST)
         if form.is_valid():
+            form.instance.user = request.user
             form.save()
             return redirect('dashboard')
     else:
@@ -132,7 +134,8 @@ def client_update(request, client_id):
     return render(request, 'cases/add_client.html', {'form':form})
 
 def getAllClients(request):
-    clients = Client.objects.all()
+    current_user = request.user
+    clients = Client.objects.filter(user=current_user)
     return render(request, 'cases/all_client.html', {'clients': clients})
 
 # Todays Cases
