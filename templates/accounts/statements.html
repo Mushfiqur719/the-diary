@@ -33,24 +33,21 @@
             </tfoot>
             <tbody>
                 {% for statement in statements %}
-                            <tr>
-                            <td>{{ statement.date }}</td>
-                            <td>{{ statement.party_name }}</td>
-                            <td>{{ statement.details }}</td>
-                            <td>{{ statement.amount }}</td>
-                            <td>{{ statement.transaction_type }}</td>
-                            </tr>
-                        {% empty %}
-                            <tr>
-                            <td colspan="12">No Staements found.</td>
-                            </tr>
-                        {% endfor %}
+                <tr>
+                    <td>{{ statement.date }}</td>
+                    <td>{{ statement.party_name }}</td>
+                    <td>{{ statement.details }}</td>
+                    <td>{{ statement.amount }}</td>
+                    <td>{{ statement.transaction_type }}</td>
+                </tr>
+                {% endfor %}
             </tbody>
         </table>
+
+        {% else %}
+            <h3 class="text-center alert alert-primary" role="alert">Currently, You don't have any statements</h3>
+        {% endif %}
     </div>
 </div>
-{% else %}
-<h3 class="text-center alert alert-primary" role="alert">Currently, You don't have any statements</h3>
-{% endif %}
-{% endblock %}
 
+{% endblock %}
