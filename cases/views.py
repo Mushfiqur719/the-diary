@@ -36,8 +36,6 @@ def casetype_update(request, casetype_id):
     casetypes = CaseType.objects.all()
     return render(request, 'cases/case_type.html', {'form': form, 'casetypes': casetypes})
 
-###############################
-
 def court_setup(request):
     if request.method == 'POST':
         form = CourtForm(request.POST)
@@ -115,7 +113,7 @@ def addClient(request):
         if form.is_valid():
             form.instance.user = request.user
             form.save()
-            return redirect('dashboard')
+            return redirect('all-client')
     else:
         form = ClientForm()
     
