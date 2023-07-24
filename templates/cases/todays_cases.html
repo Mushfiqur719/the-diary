@@ -2,13 +2,14 @@
 
 {% block content %}
   <h2 class="text-center">Today's Cases</h2>
+  {% if todays_cases %}
   <div class="card mb-4">
     <div class="card-header">
         <i class="fas fa-table me-1"></i>
         Today's Cases
     </div>
     <div class="card-body">
-        {% if todays_cases %}
+        
         <table id="datatablesSimple">
             <thead>
                 <tr>

@@ -2,13 +2,14 @@
 
 {% block content %}
   <h2 class="text-center">Not Updated Cases</h2>
+  {% if not_updated_cases %}
   <div class="card mb-4">
     <div class="card-header">
         <i class="fas fa-table me-1"></i>
         Not Updated Cases
     </div>
     <div class="card-body">
-        {% if not_updated_cases %}
+        
         <table id="datatablesSimple">
             <thead>
                 <tr>
