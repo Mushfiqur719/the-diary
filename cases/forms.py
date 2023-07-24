@@ -21,7 +21,7 @@ class PoliceStationForm(forms.ModelForm):
 class CaseForm(forms.ModelForm):
     class Meta:
         model = Case
-        exclude = ['user']
+        exclude =['user']
         widgets = {
             'date': forms.DateInput(attrs={'type': 'date'}),
         }

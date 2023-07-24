@@ -3,7 +3,7 @@
 {% load crispy_forms_tags %}
 
 {% block content %}
-
+<br>
   <div class="container">
     <div class="row">
       <div class="col-md-8 offset-md-2">
@@ -26,14 +26,14 @@
             <form method="post">
               {% csrf_token %}
 
-              <div class="row">
-                <div class="col-md-6">{{form.case_type|as_crispy_field }}</div>
-                <div class="col-md-6">{{form.court|as_crispy_field }}</div>
-              </div>
-              <div class="row">
-                <div class="col-md-6">{{form.date|as_crispy_field }}</div>
-                <div class="col-md-6">{{form.mobile_no|as_crispy_field}}</div>
-              </div>
+          <div class="row">
+            <div class="col-md-6">{{form.case_type|as_crispy_field }}</div>
+            <div class="col-md-6">{{form.court|as_crispy_field }}</div>
+          </div>
+          <div class="row">
+            <div class="col-md-6">{{form.date|as_crispy_field }}</div>
+            <div class="col-md-6">{{form.mobile_no|as_crispy_field}}</div>
+          </div>
 
               <div class="row">
                 <div class="col-md-6">{{form.first_party|as_crispy_field }}</div>
