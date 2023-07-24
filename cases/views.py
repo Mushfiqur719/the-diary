@@ -95,6 +95,7 @@ def createCase(request):
     if request.method == 'POST':
         form = CaseForm(request.POST)
         if form.is_valid():
+            form.instance.user=request.user
             form.save()
             return redirect('dashboard')
     else:
