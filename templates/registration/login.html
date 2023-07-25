@@ -16,19 +16,39 @@
                 </div>
                 {% endfor %} 
             {% endif %}
+<div class="container login">
+    <div class="row">
+        <div class="col-md-8 offset-md-2">
+            <div class="card shadow">
+                <div class="card-body">
+                    {% comment %} <h3 class="text-center">Login</h3> {% endcomment %}
 
-            <form method="POST">
-                {% csrf_token %}
-                    <div class="col-md-6 offset-md-3 col-sm-12">{{ form.email|as_crispy_field }}</div>
-                    <div class="col-md-6 offset-md-3 col-sm-12">{{ form.password|as_crispy_field }}</div>
-                    
-                    <div class="col-md-2 offset-md-5 col-sm-12"> <button type="submit" class="btn btn-primary btn-block btn-lg">Login</button></div>
-                    
-                
-                {% for error in login_form.errors %}
-                <p style="color:red">{{error}}</p>
-                {% endfor %}
-            </form>
-
+                    <form method="POST">
+                        {% csrf_token %}
+        
+                        <div class="row">
+                            <div class="col-md-4"></div>
+                            <div class="col-md-4">{{ login_form.email|as_crispy_field }}</div>
+                            <div class="col-md-4"></div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-4"></div>
+                            <div class="col-md-4">{{ login_form.password|as_crispy_field }}</div>
+                            <div class="col-md-4"></div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-5"></div>
+                            <div class="col-md-2"> <button type="submit" class="btn btn-primary btn-block btn-lg">Login</button></div>
+                            <div class="col-md-5"></div>
+                        </div>
+                        {% for error in login_form.errors %}
+                        <p style="color:red">{{error}}</p>
+                        {% endfor %}
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 
 {% endblock content %}

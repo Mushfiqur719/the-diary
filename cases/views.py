@@ -3,6 +3,8 @@ from django.shortcuts import render, redirect
 from .forms import CaseForm, CaseTypeForm, CourtForm, PoliceStationForm, ClientForm
 from .models import Case, CaseType, Court, PoliceStation, Client
 from datetime import date, timedelta
+# from reportlab.lib.pagesizes import letter
+# from reportlab.pdfgen import canvas
 
 def cases(request):
     return render(request, 'cases/cases.html')
@@ -33,8 +35,6 @@ def casetype_update(request, casetype_id):
 
     casetypes = CaseType.objects.all()
     return render(request, 'cases/case_type.html', {'form': form, 'casetypes': casetypes})
-
-###############################
 
 def court_setup(request):
     if request.method == 'POST':
@@ -95,7 +95,7 @@ def createCase(request):
     if request.method == 'POST':
         form = CaseForm(request.POST)
         if form.is_valid():
-            form.instance.user=request.user
+            form.instance.user = request.user
             form.save()
             return redirect('dashboard')
     else:
@@ -111,8 +111,9 @@ def addClient(request):
     if request.method == 'POST':
         form = ClientForm(request.POST)
         if form.is_valid():
+            form.instance.user = request.user
             form.save()
-            return redirect('dashboard')
+            return redirect('all-client')
     else:
         form = ClientForm()
     
@@ -131,39 +132,84 @@ def client_update(request, client_id):
     return render(request, 'cases/add_client.html', {'form':form})
 
 def getAllClients(request):
-    clients = Client.objects.all()
+    current_user = request.user
+    clients = Client.objects.filter(user=current_user)
     return render(request, 'cases/all_client.html', {'clients': clients})
 
 # Todays Cases
 def todays_case_list(request):
+    current_user = request.user
     today = date.today()
-    todays_cases = Case.objects.filter(date=today)
+    todays_cases = Case.objects.filter(date=today, user=current_user)
     return render(request, 'cases/todays_cases.html', {'todays_cases': todays_cases})
 
 # Tomorrows Cases
 def tomorrows_case_list(request):
+    current_user = request.user
     tomorrow = date.today() + timedelta(days=1)
-    tomorrows_cases = Case.objects.filter(date=tomorrow)
+    tomorrows_cases = Case.objects.filter(date=tomorrow, user=current_user)
     return render(request, 'cases/tomorrows_cases.html', {'tomorrows_cases': tomorrows_cases})
 
 # Running Cases
 def running_case_list(request):
-    running_cases = Case.objects.filter(status='Running')
+    current_user = request.user
+    running_cases = Case.objects.filter(status='Running', user=current_user)
     return render(request, 'cases/running_cases.html', {'running_cases': running_cases})
 
 # Abandoned Cases
 def abandoned_case_list(request):
-    abandoned_cases = Case.objects.filter(status='Abandoned')
+    current_user = request.user
+    abandoned_cases = Case.objects.filter(status='Abandoned', user=current_user)
     return render(request, 'cases/abandoned_cases.html', {'abandoned_cases': abandoned_cases})
 
 # Decided Cases
 def decided_case_list(request):
-    decided_cases = Case.objects.filter(status='Decided')
+    current_user = request.user
+    decided_cases = Case.objects.filter(status='Decided', user=current_user)
     return render(request, 'cases/decided_cases.html', {'decided_cases': decided_cases})
 
 # Not Updated Cases
 def not_updated_case_list(request):
-    not_updated_cases = Case.objects.filter(updated=False)
+    current_user = request.user
+    not_updated_cases = Case.objects.filter(updated=False, user=current_user)
     return render(request, 'cases/not_updated_cases.html', {'not_updated_cases': not_updated_cases})
+
+# def generate_pdf(request):
+#     from io import BytesIO
+
+#     # Get the data from the Case model (you may need to modify this query based on your use case)
+#     cases = Case.objects.all()
+
+#     # Create a BytesIO buffer to hold the PDF
+#     buffer = BytesIO()
+
+#     # Create the PDF canvas with the buffer and set the page size to letter
+#     p = canvas.Canvas(buffer, pagesize=letter)
+
+#     # Add content to the PDF
+#     p.setFont("Helvetica", 12)
+#     p.drawString(100, 800, "Case List")
+
+#     # Iterate through the cases and add the data to the PDF
+#     y = 780  # Initial y position for the content
+#     for case in cases:
+#         p.drawString(100, y, f"Case No: {case.case_no}")
+#         p.drawString(100, y - 20, f"Status: {case.status}")
+#         # Add more data here if needed
+#         y -= 40  # Decrement y position for the next case
+
+#     # Save the PDF
+#     p.save()
+
+#     # Get the value of the buffer and create the HTTP response with PDF content
+#     pdf_data = buffer.getvalue()
+#     buffer.close()
+
+#     response = HttpResponse(content_type='application/pdf')
+#     response['Content-Disposition'] = 'attachment; filename="case_list.pdf"'
+#     response.write(pdf_data)
+
+#     return response
+
 
 

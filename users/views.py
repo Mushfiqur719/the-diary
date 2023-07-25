@@ -57,7 +57,7 @@ def login_view(request):
     if request.user.is_authenticated:
         return redirect('dashboard') 
 
-    form = UserLoginForm()
+    login_form = UserLoginForm()
     if request.method=="POST":
         form= UserLoginForm(request.POST)
         if form.is_valid():
@@ -70,9 +70,9 @@ def login_view(request):
                 return redirect('dashboard')
             else:
                 messages= messages.error(request, 'Email or Password is invalid')
-                return render(request,'registration/login.html',{'form':form,'messages':messages})
+                return render(request,'registration/login.html',{'login_form':login_form,'messages':messages})
             
-    return render(request,'registration/login.html',{'form':form})
+    return render(request,'registration/login.html',{'login_form':login_form})
 
 def profile_page(request):
     user = request.user.id
