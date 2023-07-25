@@ -18,3 +18,6 @@ def get_statements(request):
     statements = Transaction.objects.all()
 
     return render(request,'accounts/statements.html', {'statements' : statements})
+
+def due_bills(request):
+    return render(request,'accounts/due_bills.html')
