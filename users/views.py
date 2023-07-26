@@ -55,7 +55,7 @@ def login_view(request):
     if request.user.is_authenticated:
         return redirect('dashboard') 
 
-    context={}
+    login_form = UserLoginForm()
     if request.method=="POST":
         form= UserLoginForm(request.POST)
         if form.is_valid():
@@ -66,11 +66,11 @@ def login_view(request):
             if user is not None:
                 login(request,user)
                 return redirect('dashboard')
+            else:
+                messages= messages.error(request, 'Email or Password is invalid')
+                return render(request,'registration/login.html',{'login_form':login_form,'messages':messages})
             
-    else:
-        form=UserLoginForm()
-        context['login_form']=form
-    return render(request,'registration/login.html',context)
+    return render(request,'registration/login.html',{'login_form':login_form})
 
 def profile_page(request):
     user = request.user.id
@@ -82,7 +82,7 @@ def profile_update(request,pk):
     user= CustomUser.objects.get(pk=pk)
     form=ProfileUpdateForm(instance=user)
     if request.method == 'POST':
-        profile_update=ProfileUpdateForm(request.POST,instance=request.user)
+        profile_update=ProfileUpdateForm(request.POST,request.FILES,instance=request.user)
         if profile_update.is_valid():
             profile_update.save()
             return redirect('profile_page')

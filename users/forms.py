@@ -30,5 +30,7 @@ class UserLoginForm(forms.ModelForm):
 class ProfileUpdateForm(forms.ModelForm):
     class Meta:
         model=CustomUser
-        fields=['name','email','phone']
-            
+        fields=['name','email','phone','designation','qualification','membership_number','bar_assosciation','date_of_birth','gender','chamber_address','photo']
+        widgets = {
+            'date_of_birth': forms.DateInput(attrs={'type': 'date'}),
+        }  

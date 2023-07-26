@@ -5,5 +5,8 @@ from . import views
 urlpatterns = [
     path('entry-transaction/',views.entry_transaction, name='all_transactions'),
     path('statements/',views.get_statements, name='statements'),
-    path('delete-statement/<int:id>/',views.delete_transaction, name='delete_statement')
+    path('bill-invoices/',views.bill_invoices, name="bill_invoices"),
+    path('due_bills/',views.due_bills, name="due_bills"),
+    path('due_bills/<int:pk>',views.paid_due_bills, name="paid_due_bills"),
+    path('quotations/',views.quotations,name="quotations"),
 ]

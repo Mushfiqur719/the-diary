@@ -35,6 +35,20 @@ class CustomUser(AbstractBaseUser):
     name= models.CharField(max_length=255)
     email= models.EmailField(max_length=100,unique=True)
     phone= models.CharField(max_length=15,unique=True)
+    designation= models.CharField(max_length=100, null=True, blank=True)
+    qualification= models.CharField(max_length=100, null=True, blank=True)
+    membership_number= models.IntegerField(null=True, blank=True)
+    bar_assosciation = models.CharField(max_length=100, blank=True, null=True)
+    date_of_birth= models.DateField(null=True, blank=True)
+    
+    GENDER_CHOICES = (
+        ('Male', 'Male'),
+        ('Female', 'Female')
+    )
+    gender = models.CharField(max_length=8,choices=GENDER_CHOICES, blank=True, null=True)
+    chamber_address = models.CharField(max_length=150, blank=True, null=True)
+    photo = models.ImageField(null=True,blank=True,upload_to="images/")
+    
     
     #required fields
     date_joined = models.DateTimeField(auto_now_add=True)
