@@ -1,4 +1,4 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from . models import Transaction
 from . forms import TransactionForm
 
@@ -16,5 +16,14 @@ def entry_transaction(request):
 
 def get_statements(request):
     statements = Transaction.objects.all()
-
     return render(request,'accounts/statements.html', {'statements' : statements})
+
+def delete_transaction(request, id):
+    transaction = get_object_or_404(Transaction, pk=id)
+    if request.method == 'POST':
+        transaction.delete()
+        return redirect('statements')
+    return render(request, 'accounts/statements.html')
+
+
+

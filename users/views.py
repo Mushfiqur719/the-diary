@@ -13,9 +13,7 @@ def index(request):
 
 @login_required
 def dashboard(request):
-    user = request.user  # Get the currently logged-in user
-
-    # Filter cases by the logged-in user
+    user = request.user
     all_cases = Case.objects.filter(user=user).count()
     running_cases = Case.objects.filter(user=user, status='Running').count()
     todays_cases = Case.objects.filter(user=user, date=date.today()).count()

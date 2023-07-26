@@ -4,16 +4,14 @@
 {% block content %}
 
 <div class="statements">
-{% if statements %}
-
-      <div class="col-md-10 offset-md-1">
+  {% if statements %}
+      <div class="col-md-12">
         <div class="card mb-4">
           <div class="card-header">
               <i class="fas fa-table me-1"></i>
               Statements
           </div>
           <div class="card-body">
-            
               <table id="datatablesSimple">
                   <thead>
                     <tr>
@@ -21,26 +19,21 @@
                         <th>Client Name</th>
                         <th>Details</th>
                         <th>Transaction Type</th>
+                        <th>Amount</th>
                         <th>Action</th>
                     </tr>
                   </thead>
-                  <tfoot>
-                    <tr>
-                        <th>Date</th>
-                        <th>Client Name</th>
-                        <th>Details</th>
-                        <th>Transaction Type</th>
-                        <th>Action</th>
-                    </tr>
-                  </tfoot>
                   <tbody>
                     {% for statement in statements %}
                     <tr>
-                    <td>{{ statement.date }}</td>
-                    <td>{{ statement.party_name }}</td>
-                    <td>{{ statement.details }}</td>
-                    <td>{{ statement.transaction_type }}</td>
-                    <td></td>
+                      <td>{{ statement.date }}</td>
+                      <td>{{ statement.party_name }}</td>
+                      <td>{{ statement.details }}</td>
+                      <td>{{ statement.transaction_type }}</td>
+                      <td>{{ statement.amount }}</td>
+                      <td>
+                        <a href="#" class="btn btn-danger btn-sm">Delete</a>
+                      </td>
                     </tr>
                     {% endfor %}
                   </tbody>
@@ -48,54 +41,11 @@
 
               {% else %}
                     <h3 class="text-center alert alert-primary" role="alert">Currently, You don't have any statements</h3>
-           
           </div>
         </div>
-        {% endif %}
-        
-           
       </div>
-    </div>
-
-
+  {% endif %}
+</div>
 {% endblock %}
-
-<div class="container">
-    <div class="row">
-        <div class="col-md-12">
-            <h3 class="text-center">Statements</h3>
-            {% if statements %}
-            <table class="table">
-                <thead class="thead-dark">
-                        <tr>
-                            <th>Date</th>
-                            <th>Client Name</th>
-                            <th>Details</th>
-                            <th>Transaction Type</th>
-                            <th>Action</th>
-                        </tr>
-                        </thead>
-                        <tbody>
-                        {% for statement in statements %}
-                            <tr>
-                            <td>{{ statement.date }}</td>
-                            <td>{{ statement.party_name }}</td>
-                            <td>{{ statement.details }}</td>
-                            <td>{{ statement.transaction_type }}</td>
-                            </tr>
-                        {% empty %}
-                            <tr>
-                            <td colspan="12">No cases found.</td>
-                            </tr>
-                        {% endfor %}
-                        </tbody>
-                    </table>
-                    {% else %}
-                    <h3 class="text-center alert alert-primary" role="alert">Currently, You don't have any statements</h3>
-                    {% endif %}
-        </div>
-    </div>
-  </div>
-
 
 
