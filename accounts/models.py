@@ -34,6 +34,7 @@ class BillInvoices(models.Model):
     
 class Quotations(models.Model):
     client= models.ForeignKey(Client, on_delete=models.CASCADE)
+    address = models.CharField(max_length=150,null=True,blank=True)
     subjects= models.CharField(max_length=255, blank=True, null=True)
     date= models.DateField(auto_now_add=True)
     description= models.TextField(blank=True, null=True)

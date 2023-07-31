@@ -47,7 +47,7 @@ class CustomUser(AbstractBaseUser):
     )
     gender = models.CharField(max_length=8,choices=GENDER_CHOICES, blank=True, null=True)
     chamber_address = models.CharField(max_length=150, blank=True, null=True)
-    photo = models.ImageField(null=True,blank=True,upload_to="images/")
+    photo = models.ImageField(upload_to="images/", default='images/avatar.webp')
     
     
     #required fields

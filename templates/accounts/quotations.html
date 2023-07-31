@@ -36,13 +36,13 @@
               {% for quotation in quotations %}
               <tr>
         
-                        <td>{{ quotation.date }}</td>
-                        <td>{{ quotation.client }}</td>
-                        <td>{{ quotation.subjects }}</td>
+                        <td><a href="{% url 'oneQuotation' quotation.id %}">{{ quotation.date }}</a></td>
+                        <td><a href="{% url 'oneQuotation' quotation.id %}">{{ quotation.client }}</a></td>
+                        <td><a href="{% url 'oneQuotation' quotation.id %}">{{ quotation.subjects }}</a></td>
                         {% if  quotation.vat%}
-                        <td>{{ quotation.amount|add:quotation.vat }}</td>
+                        <td><a href="{% url 'oneQuotation' quotation.id %}">{{ quotation.amount|add:quotation.vat }}</a></td>
                         {% else %}
-                        <td>{{ quotation.amount }}</td>
+                        <td><a href="{% url 'oneQuotation' quotation.id %}">{{ quotation.amount }}</a></td>
                         {% endif %}
               </tr>
               {% endfor %}
@@ -76,6 +76,10 @@
     
             <div class="row">
               <div class="col-md-12">{{ form.client|as_crispy_field }}</div>
+             
+            </div>
+            <div class="row">
+              <div class="col-md-12">{{ form.address|as_crispy_field }}</div>
              
             </div>
             <div class="row">

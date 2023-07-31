@@ -9,4 +9,6 @@ urlpatterns = [
     path('due_bills/',views.due_bills, name="due_bills"),
     path('due_bills/<int:pk>',views.paid_due_bills, name="paid_due_bills"),
     path('quotations/',views.quotations,name="quotations"),
+    path('quotation/<int:pk>/',views.oneQuotation,name="oneQuotation"),
+    path('genquopdf/<int:pk>/',views.quotationPdf,name="QuotationPDF"),
 ]

@@ -1,6 +1,13 @@
-from django.shortcuts import render, redirect
+import os
+from django.shortcuts import render, redirect,get_list_or_404
+from django.http import HttpResponse
+from django.template.loader import get_template
+from xhtml2pdf import pisa
+from datetime import date
+from num2words import num2words
 from . models import Transaction, BillInvoices, Quotations
 from . forms import TransactionForm, BillInvoicesForm, QuotationsForm
+
 
 # Create your views here.
 
@@ -48,3 +55,35 @@ def quotations(request):
         if form.is_valid():
             form.save()
     return render(request,'accounts/quotations.html',{'quotations':quotations,'form':form})
+
+def oneQuotation(request,pk):
+    quotation=Quotations.objects.get(pk=pk)
+    total = quotation.amount + quotation.vat
+    word= num2words(total)
+    return render(request,'accounts/oneQuotation.html',{'quotation':quotation,'word':word})
+
+
+def quotationPdf(request, *args, **kwargs):
+    pk = kwargs.get('pk')
+    quotation=Quotations.objects.get(pk=pk)
+    user = request.user
+    today = date.today()
+    total = quotation.amount + quotation.vat
+    word= num2words(total)
+    template_path = 'accounts/quotationpdf.html'
+    context = {'quotation': quotation,'user':user,'today':today,'word':word}
+    # Create a Django response object, and specify content_type as pdf
+    response = HttpResponse(content_type='application/pdf')
+    
+    response['Content-Disposition'] = 'filename="quotation.pdf"'
+    # find the template and render it.
+    template = get_template(template_path)
+    html = template.render(context)
+
+    # create a pdf
+    pisa_status = pisa.CreatePDF(
+       html, dest=response)
+    # if error then show some funny view
+    if pisa_status.err:
+       return HttpResponse('We had some errors <pre>' + html + '</pre>')
+    return response
