@@ -30,3 +30,17 @@ class ClientForm(forms.ModelForm):
     class Meta:
         model = Client
         fields = '__all__'
+
+class ClientBulkUploadForm(forms.Form):
+    excel_file = forms.FileField(label="Select Excel File")
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.fields['excel_file'].required = True
+
+    def clean_excel_file(self):
+        excel_file = self.cleaned_data['excel_file']
+        if not excel_file.name.endswith('.xlsx'):
+            raise forms.ValidationError('Please upload a valid Excel file.')
+
+        return excel_file
