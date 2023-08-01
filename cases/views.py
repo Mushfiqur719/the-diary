@@ -1,8 +1,9 @@
 
 from django.shortcuts import render, redirect
-from .forms import CaseForm, CaseTypeForm, CourtForm, PoliceStationForm, ClientForm
+from .forms import CaseForm, CaseTypeForm, CourtForm, PoliceStationForm, ClientForm, ClientBulkUploadForm
 from .models import Case, CaseType, Court, PoliceStation, Client
 from datetime import date, timedelta
+import pandas as pd
 # from reportlab.lib.pagesizes import letter
 # from reportlab.pdfgen import canvas
 
@@ -91,17 +92,6 @@ def police_station_update(request, station_id):
     stations = PoliceStation.objects.all()
     return render(request, 'cases/police_stations.html',{'form':form, 'stations': stations})
 
-def createCase(request):
-    if request.method == 'POST':
-        form = CaseForm(request.POST)
-        if form.is_valid():
-            form.instance.user = request.user
-            form.save()
-            return redirect('dashboard')
-    else:
-        form = CaseForm()
-    return render(request, 'cases/create_case.html', {'form': form})
-
 def getAllCases(request):
     current_user = request.user
     cases = Case.objects.filter(user=current_user)
@@ -119,6 +109,33 @@ def addClient(request):
     
     return render(request, 'cases/add_client.html', {'form':form})
 
+def bulk_upload_clients(request):
+    if request.method == 'POST':
+        bulk_form = ClientBulkUploadForm(request.POST, request.FILES)
+        if bulk_form.is_valid():
+            excel_file = request.FILES['excel_file']
+            df = pd.read_excel(excel_file, engine='openpyxl')
+
+            for index, row in df.iterrows():
+                client = Client(
+                    name=row['name'],
+                    branch=row['branch'],
+                    chamber_file_number=row['chamber_file_number'],
+                    Representative=row['Representative'],
+                    mobile=row['mobile'],
+                    additional_mobile=row['additional_mobile'],
+                    email=row['email'],
+                    address=row['address'],
+                    short_note=row['short_note'],
+                )
+
+                client.save()
+            return render(request, 'all-client')
+    else:
+        bulk_form = ClientBulkUploadForm()
+
+    return render(request, 'cases/add_client.html', {'bulk_form':bulk_form})
+
 def client_update(request, client_id):
     client = Client.objects.get(id=client_id)
     if request.method == 'POST':
@@ -135,6 +152,17 @@ def getAllClients(request):
     current_user = request.user
     clients = Client.objects.filter(user=current_user)
     return render(request, 'cases/all_client.html', {'clients': clients})
+
+def createCase(request):
+    if request.method == 'POST':
+        form = CaseForm(request.POST)
+        if form.is_valid():
+            form.instance.user = request.user
+            form.save()
+            return redirect('dashboard')
+    else:
+        form = CaseForm()
+    return render(request, 'cases/create_case.html', {'form': form})
 
 # Todays Cases
 def todays_case_list(request):
@@ -173,6 +201,7 @@ def not_updated_case_list(request):
     current_user = request.user
     not_updated_cases = Case.objects.filter(updated=False, user=current_user)
     return render(request, 'cases/not_updated_cases.html', {'not_updated_cases': not_updated_cases})
+
 
 # def generate_pdf(request):
 #     from io import BytesIO

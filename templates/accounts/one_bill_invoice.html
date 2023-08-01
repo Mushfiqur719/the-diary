@@ -2,7 +2,7 @@
 
 
 {% extends 'dashboard/dashboard.html' %}
-{% block title %}Quotations | Dashboard {% endblock title %} 
+{% block title %}Bill Invoices | Dashboard {% endblock title %} 
 {% load crispy_forms_tags %}
 
 {% block content %}
@@ -20,7 +20,7 @@
                     <ul class="navbar-nav ml-auto">
                         
                         <li class="nav-item">
-                            <a class="nav-link btn btn-danger" href="{% url 'QuotationPDF' quotation.id %}" target="_blank"> <i class="fa fa-print" aria-hidden="true"></i>
+                            <a class="nav-link btn btn-danger" href="{% url 'BillInvoicePDF' bill_invoice.id %}" target="_blank"> <i class="fa fa-print" aria-hidden="true"></i>
                               Print
                             </a>
                         </li>
@@ -32,11 +32,11 @@
             <br>
 
             <h6>To,</h6>
-            <strong>{{ quotation.client }}</strong>
-            <p>{{ quotation.address }}</p>
+            <strong>{{ bill_invoice.client }}</strong>
+            <p>{{ bill_invoice.address }}</p>
             <br>
             <br>
-            <h6>Subject: {{quotation.subjects}}</h6>
+            <h6>Subject: {{bill_invoice.subjects}}</h6>
             <br>
             <br>
 
@@ -52,9 +52,9 @@
                 <tbody>
                   <tr>
                     <th scope="row">1</th>
-                    <td colspan="2">{{quotation.description}}</td>
+                    <td colspan="2">{{bill_invoice.description}}</td>
                     <td>Total </td>
-                    <td>{{quotation.amount|add:quotation.vat}}</td>
+                    <td>{{bill_invoice.amount|add:bill_invoice.vat}}</td>
                   </tr>
                   <tr>
                     <td colspan="5"> In word: {{ word }} taka only</td>

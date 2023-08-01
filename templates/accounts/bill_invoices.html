@@ -17,7 +17,7 @@
                 <tr>
                   <th>Date</th>
                   <th>Invoice To</th>
-                  <th>subjects</th>
+                  <th>Subjects</th>
                   <th>Total</th>
                 </tr>
             </thead>
@@ -25,7 +25,7 @@
                 <tr>
                   <th>Date</th>
                       <th>Invoice To</th>
-                      <th>subjects</th>
+                      <th>Subjects</th>
                       <th>Total</th>
                 </tr>
             </tfoot>
@@ -33,13 +33,13 @@
               {% for bill_invoice in bill_invoices %}
               <tr>
         
-                        <td>{{ bill_invoice.date }}</td>
-                        <td>{{ bill_invoice.client }}</td>
-                        <td>{{ bill_invoice.subjects }}</td>
+                        <td><a href="{% url 'oneBillInvoice' bill_invoice.id %}">{{ bill_invoice.date }}</a></td>
+                        <td><a href="{% url 'oneBillInvoice' bill_invoice.id %}">{{ bill_invoice.client }}</a></td>
+                        <td><a href="{% url 'oneBillInvoice' bill_invoice.id %}">{{ bill_invoice.subjects }}</a></td>
                         {% if  bill_invoice.vat%}
-                        <td>{{ bill_invoice.amount|add:bill_invoice.vat }}</td>
+                        <td><a href="{% url 'oneBillInvoice' bill_invoice.id %}">{{ bill_invoice.amount|add:bill_invoice.vat }}</a></td>
                         {% else %}
-                        <td>{{ bill_invoice.amount }}</td>
+                        <td><a href="{% url 'oneBillInvoice' bill_invoice.id %}">{{ bill_invoice.amount }}</a></td>
                         {% endif %}
               </tr>
               {% endfor %}
@@ -77,6 +77,10 @@
     
             <div class="row">
               <div class="col-md-12">{{ form.client|as_crispy_field }}</div>
+             
+            </div>
+            <div class="row">
+              <div class="col-md-12">{{ form.address|as_crispy_field }}</div>
              
             </div>
             <div class="row">
