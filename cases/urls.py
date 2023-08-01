@@ -15,10 +15,11 @@ urlpatterns = [
     path('stations/',views.police_station_setup, name='stations'),
     path('stations/<int:station_id>/',views.police_station_update, name='edit-stations'),
 
+    # <---------- Client Section ------------->
     path('add-client/',views.addClient, name='add-client'),
     path('update-client/<int:client_id>',views.client_update, name='update-client'),
-
     path('all-client/',views.getAllClients, name='all-client'),
+    path('bulk-upload/', views.bulk_upload_clients, name='bulk_upload_clients'),
 
     path('all-cases/',views.getAllCases,name='all-cases'),
     path('todays-cases/',views.todays_case_list,name='todays-cases'),

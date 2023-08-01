@@ -92,17 +92,6 @@ def police_station_update(request, station_id):
     stations = PoliceStation.objects.all()
     return render(request, 'cases/police_stations.html',{'form':form, 'stations': stations})
 
-def createCase(request):
-    if request.method == 'POST':
-        form = CaseForm(request.POST)
-        if form.is_valid():
-            form.instance.user = request.user
-            form.save()
-            return redirect('dashboard')
-    else:
-        form = CaseForm()
-    return render(request, 'cases/create_case.html', {'form': form})
-
 def getAllCases(request):
     current_user = request.user
     cases = Case.objects.filter(user=current_user)
@@ -163,6 +152,17 @@ def getAllClients(request):
     current_user = request.user
     clients = Client.objects.filter(user=current_user)
     return render(request, 'cases/all_client.html', {'clients': clients})
+
+def createCase(request):
+    if request.method == 'POST':
+        form = CaseForm(request.POST)
+        if form.is_valid():
+            form.instance.user = request.user
+            form.save()
+            return redirect('dashboard')
+    else:
+        form = CaseForm()
+    return render(request, 'cases/create_case.html', {'form': form})
 
 # Todays Cases
 def todays_case_list(request):
