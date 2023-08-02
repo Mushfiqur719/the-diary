@@ -9,10 +9,10 @@ class Transaction(models.Model):
         ('Expense','Expense'),
     )
     transaction_type = models.CharField(max_length=20, choices=TRANSACTION_TYPE)
-    party_name = models.CharField(max_length=50,blank=True, null=True)
+    party_name = models.CharField(max_length=50)
     details = models.TextField(blank=True,null=True)
     amount = models.PositiveIntegerField()
-    date = models.DateField()
+    date = models.DateField(auto_now_add=True)
 
     def __str__(self):
         return f"Date: {self.date}, Client: {self.party_name}"
@@ -20,6 +20,7 @@ class Transaction(models.Model):
     
 class BillInvoices(models.Model):
     client= models.ForeignKey(Client, on_delete=models.CASCADE)
+    address = models.CharField(max_length=150,null=True,blank=True)
     subjects= models.CharField(max_length=255, blank=True, null=True)
     date= models.DateField(auto_now_add=True)
     description= models.TextField(blank=True, null=True)
@@ -34,6 +35,7 @@ class BillInvoices(models.Model):
     
 class Quotations(models.Model):
     client= models.ForeignKey(Client, on_delete=models.CASCADE)
+    address = models.CharField(max_length=150,null=True,blank=True)
     subjects= models.CharField(max_length=255, blank=True, null=True)
     date= models.DateField(auto_now_add=True)
     description= models.TextField(blank=True, null=True)

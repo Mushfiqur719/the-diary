@@ -3,25 +3,32 @@
 {% load crispy_forms_tags %}
 
 {% block content %}
-
-    <div class="col-md-12">
-            <h3 class="text-center">Login</h3>
-        </div>
+<div class="container">
+    <div class="row">
+        <div class="col-md-12">
+            <center>
                 {% if messages %}
-                {% for message in messages %} 
-                <div class="alert {{message.tags}} m-1" role="alert">
-                    {{message}}
-                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                    <span aria-label="Close">&times;</span>
-                </div>
-                {% endfor %} 
-            {% endif %}
+                <ul class="messages">
+                    {% for message in messages %}
+                    <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+                    {% endfor %}
+                </ul>
+                {% endif %}
+            </center>
+        </div>
+    </div>
+</div>
+    
+<br>
+<br>
 <div class="container login">
     <div class="row">
         <div class="col-md-8 offset-md-2">
             <div class="card shadow">
                 <div class="card-body">
-                    {% comment %} <h3 class="text-center">Login</h3> {% endcomment %}
+                    <h3 class="text-center">Login</h3>
+                    <br>
+                   
 
                     <form method="POST">
                         {% csrf_token %}
@@ -41,14 +48,22 @@
                             <div class="col-md-2"> <button type="submit" class="btn btn-primary btn-block btn-lg">Login</button></div>
                             <div class="col-md-5"></div>
                         </div>
-                        {% for error in login_form.errors %}
-                        <p style="color:red">{{error}}</p>
-                        {% endfor %}
+                      
                     </form>
+                    <br>
+                    {% for error in login_form.errors %}
+                    <p class="alert alert-danger text-center" role="alert">Sorry, Invalid Login Credentials
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                          </button>
+                    </p>
+                    {% endfor %}
                 </div>
             </div>
         </div>
     </div>
 </div>
+<br>
+<br>
 
 {% endblock content %}
