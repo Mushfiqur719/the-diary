@@ -1,5 +1,11 @@
 from django.db import models
 from users.models import CustomUser
+from django.core.validators import FileExtensionValidator
+
+class BulkUpload(models.Model):
+    file = models.FileField(upload_to="files/",blank=True,null=True,validators=[FileExtensionValidator(['csv', 'xls', 'xlsx'])])
+    date = models.DateTimeField(auto_now_add=True)
+
 
 class CaseType(models.Model):
     case_type = models.CharField(max_length=50, blank=True, null=True)

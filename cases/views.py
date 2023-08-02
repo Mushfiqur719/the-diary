@@ -1,6 +1,6 @@
 
 from django.shortcuts import render, redirect
-from .forms import CaseForm, CaseTypeForm, CourtForm, PoliceStationForm, ClientForm, ClientBulkUploadForm
+from .forms import CaseForm, CaseTypeForm, CourtForm, PoliceStationForm, ClientForm, BulkUploadForm
 from .models import Case, CaseType, Court, PoliceStation, Client
 from datetime import date, timedelta
 import pandas as pd
@@ -9,6 +9,7 @@ import pandas as pd
 
 def cases(request):
     return render(request, 'cases/cases.html')
+
 # Case Types
 def casetype_setup(request):
     if request.method == 'POST':
@@ -111,13 +112,22 @@ def addClient(request):
 
 def bulk_upload_clients(request):
     if request.method == 'POST':
-        bulk_form = ClientBulkUploadForm(request.POST, request.FILES)
+        bulk_form = BulkUploadForm(request.POST, request.FILES)
         if bulk_form.is_valid():
-            excel_file = request.FILES['excel_file']
-            df = pd.read_excel(excel_file, engine='openpyxl')
+            uploaded_file = request.FILES['file']
+
+            if uploaded_file.name.endswith('.xlsx') or uploaded_file.name.endswith('.xls'):
+                df = pd.read_excel(uploaded_file, engine='openpyxl')
+            elif uploaded_file.name.endswith('.csv'):
+                df = pd.read_csv(uploaded_file)
+            else:
+                return render(request, 'cases/unsupported_file.html')
+
+            user = request.user if request.user.is_authenticated else None
 
             for index, row in df.iterrows():
                 client = Client(
+                    user=user,  # Set the user for the Client object
                     name=row['name'],
                     branch=row['branch'],
                     chamber_file_number=row['chamber_file_number'],
@@ -128,13 +138,16 @@ def bulk_upload_clients(request):
                     address=row['address'],
                     short_note=row['short_note'],
                 )
-
                 client.save()
-            return render(request, 'all-client')
-    else:
-        bulk_form = ClientBulkUploadForm()
 
-    return render(request, 'cases/add_client.html', {'bulk_form':bulk_form})
+            return redirect('all-client')  # Redirect to a success page or client list page
+    else:
+        bulk_form = BulkUploadForm()
+
+    return render(request, 'cases/bulk_upload_clients.html', {'bulk_form': bulk_form})
+
+
+
 
 def client_update(request, client_id):
     client = Client.objects.get(id=client_id)
