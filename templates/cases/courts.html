@@ -3,58 +3,80 @@
 {% load crispy_forms_tags %}
 
 {% block content %}
-<br>
+
+
 <div class="container">
   <div class="row">
-    <div class="col-md-12">
-            <h2 class="text-center">Courts</h2>
-            <form method="post">
-              {% csrf_token %}
+              <div class="col-md-3  ml-3"><button type="button" class="btn btn-primary" data-toggle="modal" data-target=".bd-example-modal-lg">Create Courts</button></div>
+  </div>
+</div>
           
-            <div class="row">
-              <div class="col-md-6 offset-md-3">{{form.court|as_crispy_field}}</div>
-            </div>
-              
-             <div class="row">
-              <div class="col-md-2 offset-md-3"> 
-                <button type="submit" class="btn btn-primary">Create</button>
+<div class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-lg">
+              <div class="modal-content">
+                
+                <div class="container">
+                    <div class="row">
+                      <div class="col-md-8 offset-md-2">
+                            <br>
+                            <h3 class="text-center alert alert-primary" role="alert">Create Courts</h3>
+                            <form method="post">
+                              {% csrf_token %}
+                  
+                              <div class="row">
+                                <div class="col-md-8">{{form.court|as_crispy_field}}</div>
+                              </div>
+                              <div class="row">
+                                <div class="col-md-2 offset-md-3"><button type="submit" class="btn btn-primary">Create</button></div>
+                              </div>
+                  
+                            </form>
+                          </div>
+                        </div>
+                  </div>
               </div>
-             </div>
-            </form>
-          <br>
+            </div>
+</div>
+
           <br>
 
-          <div class="row">
-            <div class="col-md-6 offset-md-3">
-              <h2 class="text-center">Courts List</h2>
-              <div class="table-container">
-                <table class="table">
-                  <thead class="thead-dark">
+  {% if courts %}
+    <div class="card mb-4 ml-4 mr-4">
+              <div class="card-header">
+                <i class="fas fa-table me-1"></i>
+                Case Types
+                <div class="float-end">
+                  <a href="#" class="btn btn-primary me-2">Create</a>
+                  <a href="#" class="btn btn-primary">Bulk Create</a>
+                </div>
+              </div>
+              <div class="card-body">
+                <table id="datatablesSimple">
+                  <thead>
                     <tr>
-                      <th scope="col">Court</th>
-                      <th scope="col">Edit</th>
+                      <th>Court Type</th>
+                      <th>Edit</th>
                     </tr>
                   </thead>
+                  <tfoot>
+                    <tr>
+                      <th>Court Type</th>
+                      <th>Edit</th>
+                    </tr>
+                  </tfoot>
                   <tbody>
                     {% for singlecourt in courts %}
-                      <tr>
-                        <td>{{ singlecourt.court }}</td>
-                        <td><a href="/courts/{{ singlecourt.id }}">Edit</a></td> <!-- Add an "Edit" button -->
-                      </tr>
-                    {% empty %}
-                      <tr>
-                        <td colspan="12">No cases found.</td>
-                      </tr>
-                    {% endfor %}
+                        <tr>
+                          <td>{{ singlecourt.court }}</td>
+                          <td><a href="/courts/{{ singlecourt.id }}">Edit</a></td> <!-- Add an "Edit" button -->
+                        </tr>
+                      {% endfor %}
                   </tbody>
                 </table>
               </div>
-            </div>
-          </div>
     </div>
-  </div>
-</div>
-
-  
+  {% else %}
+    <h3 class="text-center alert alert-primary" role="alert">Currently, You don't have any Courts</h3>
+  {% endif %}
 
 {% endblock %}
