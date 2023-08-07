@@ -24,6 +24,34 @@ def casetype_setup(request):
 
     return render(request, 'cases/case_type.html',{'form':form, 'casetypes': casetypes})
 
+def bulk_upload_casetype(request):
+    if request.method == 'POST':
+        bulk_form = BulkUploadForm(request.POST, request.FILES)
+        if bulk_form.is_valid():
+            uploaded_file = request.FILES['file']
+
+            if uploaded_file.name.endswith('.xlsx') or uploaded_file.name.endswith('.xls'):
+                df = pd.read_excel(uploaded_file, engine='openpyxl')
+            elif uploaded_file.name.endswith('.csv'):
+                df = pd.read_csv(uploaded_file)
+            else:
+                return render(request, 'cases/unsupported_file.html')
+
+            user = request.user if request.user.is_authenticated else None
+
+            for index, row in df.iterrows():
+                case_types = CaseType(
+                    user=user,  # Set the user for the Client object
+                    case_type=row['Case Types'],
+                )
+                case_types.save()
+
+            return redirect('case-type')
+    else:
+        bulk_form = BulkUploadForm()
+
+    return render(request, 'cases/bulk_upload_casetype.html', {'bulk_form': bulk_form})
+
 def casetype_update(request, casetype_id):
     casetype = CaseType.objects.get(id=casetype_id)
 
@@ -50,6 +78,35 @@ def court_setup(request):
     courts = Court.objects.all()
 
     return render(request, 'cases/courts.html',{'form':form, 'courts': courts})
+
+def bulk_upload_courts(request):
+
+    if request.method == 'POST':
+        bulk_form = BulkUploadForm(request.POST, request.FILES)
+        if bulk_form.is_valid():
+            uploaded_file = request.FILES['file']
+            if uploaded_file.name.endswith('.xlsx') or uploaded_file.name.endswith('.xls'):
+                df = pd.read_excel(uploaded_file, engine='openpyxl')
+            elif uploaded_file.name.endswith('.csv'):
+                df = pd.read_csv(uploaded_file)
+            else:
+                return render(request, 'cases/unsupported_file.html')
+
+            user = request.user if request.user.is_authenticated else None
+
+            for index, row in df.iterrows():
+                courts = Court(
+                    user=user,  # Set the user for the Client object
+                    court=row['Courts'],
+                )
+                courts.save()
+
+            return redirect('courts')
+    else:
+        bulk_form = BulkUploadForm()
+
+    return render(request, 'cases/bulk_upload_courts.html', {'bulk_form': bulk_form})
+
 
 def court_update(request, court_id):
     court = Court.objects.get(id=court_id)
@@ -78,6 +135,34 @@ def police_station_setup(request):
         form = PoliceStationForm()
     stations = PoliceStation.objects.all()
     return render(request, 'cases/police_stations.html',{'form':form, 'stations': stations})
+
+def bulk_upload_police_stations(request):
+    if request.method == 'POST':
+        bulk_form = BulkUploadForm(request.POST, request.FILES)
+        if bulk_form.is_valid():
+            uploaded_file = request.FILES['file']
+
+            if uploaded_file.name.endswith('.xlsx') or uploaded_file.name.endswith('.xls'):
+                df = pd.read_excel(uploaded_file, engine='openpyxl')
+            elif uploaded_file.name.endswith('.csv'):
+                df = pd.read_csv(uploaded_file)
+            else:
+                return render(request, 'cases/unsupported_file.html')
+
+            user = request.user if request.user.is_authenticated else None
+
+            for index, row in df.iterrows():
+                police_station = PoliceStation(
+                    user=user,  # Set the user for the Client object
+                    station=row['station'],
+                )
+                police_station.save()
+
+            return redirect('stations')
+    else:
+        bulk_form = BulkUploadForm()
+
+    return render(request, 'cases/bulk_upload_stations.html', {'bulk_form': bulk_form})
 
 def police_station_update(request, station_id):
     station = PoliceStation.objects.get(id=station_id)

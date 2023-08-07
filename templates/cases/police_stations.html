@@ -4,13 +4,6 @@
 
 {% block content %}
 <br>
-
-<div class="container">
-  <div class="row">
-    <div class="col-md-2  ml-3"><button type="button" class="btn btn-primary" data-toggle="modal" data-target=".bd-example-modal-lg">Create Station</button></div>
-    <div class="col-md-2"><button type="button" class="btn btn-success" data-toggle="modal" data-target=".bd-example-modal-lg">Bulk Create Station</button></div>
-  </div>
-</div>
           
 <div class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
             <div class="modal-dialog modal-lg">
@@ -30,6 +23,7 @@
                               <div class="row">
                                 <div class="col-md-2 offset-md-3"><button type="submit" class="btn btn-primary">Create</button></div>
                               </div>
+                              <br>
                   
                             </form>
                           </div>
@@ -45,10 +39,10 @@
     <div class="card mb-4 ml-4 mr-4">
               <div class="card-header">
                 <i class="fas fa-table me-1"></i>
-                Case Types
+                Police Stations
                 <div class="float-end">
-                  <a href="#" class="btn btn-primary me-2">Create</a>
-                  <a href="#" class="btn btn-primary">Bulk Create</a>
+                  <a type="button" class="btn btn-primary" data-toggle="modal" data-target=".bd-example-modal-lg">Create</a>
+                  <a href="{% url 'bulk_upload_stations' %}" class="btn btn-success">Bulk Upload</a>
                 </div>
               </div>
               <div class="card-body">
@@ -69,7 +63,9 @@
                     {% for single_station in stations %}
                       <tr>
                         <td>{{ single_station.station }}</td>
-                        <td><a href="/stations/{{ single_station.id }}">Edit</a></td>
+                        <td>
+                          <a href="/stations/{{ single_station.id }}" type="button" class="btn btn-info" data-toggle="modal" data-target=".bd-example-modal-lg">Edit</a>
+                        </td>
                       </tr>
                     {% endfor %}
                   </tbody>

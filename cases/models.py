@@ -8,18 +8,21 @@ class BulkUpload(models.Model):
 
 
 class CaseType(models.Model):
+    user = models.ForeignKey(CustomUser, on_delete=models.CASCADE,blank=True, null=True)
     case_type = models.CharField(max_length=50, blank=True, null=True)
 
     def __str__(self):
         return f"{self.case_type}"
 
 class Court(models.Model):
+    user = models.ForeignKey(CustomUser, on_delete=models.CASCADE,blank=True, null=True)
     court = models.CharField(max_length=50, blank=True, null=True)
 
     def __str__(self):
         return f"{self.court}"
 
 class PoliceStation(models.Model):
+    user = models.ForeignKey(CustomUser, on_delete=models.CASCADE,blank=True, null=True)
     station = models.CharField(max_length=50, blank=True, null=True)
 
     def __str__(self):
