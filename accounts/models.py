@@ -39,8 +39,8 @@ class Quotations(models.Model):
     subjects= models.CharField(max_length=255, blank=True, null=True)
     date= models.DateField(auto_now_add=True)
     description= models.TextField(blank=True, null=True)
-    amount=models.DecimalField(max_digits=5,decimal_places=2,blank=True, null=True)
-    vat=models.DecimalField(max_digits=5,decimal_places=2, blank=True, null=True)
+    amount=models.DecimalField(max_digits=10,decimal_places=7,blank=True, null=True)
+    vat=models.DecimalField(max_digits=10,decimal_places=7, blank=True, null=True)
     is_paid= models.BooleanField(default=False)
     
     
